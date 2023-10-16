@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:panucci_delivery/store/carrinho_store.dart';
 import 'package:panucci_delivery/store/item_store.dart';
+import 'package:provider/provider.dart';
 
 class Contador extends StatelessWidget {
   final ItemStore itemStore = ItemStore();
@@ -9,6 +11,8 @@ class Contador extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final carrinhoStore = Provider.of<CarrinhoStore>(context, listen: false);
+
     return Observer(
       builder: (_) => Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -18,6 +22,7 @@ class Contador extends StatelessWidget {
             onTap: () {
               if (itemStore.valorContador > 0) {
                 itemStore.removerItem();
+                carrinhoStore.removerItem();
               }
             },
             child: const Icon(
@@ -30,6 +35,7 @@ class Contador extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
             onTap: () {
               itemStore.adicionarItem();
+              carrinhoStore.adicionarItem();
             },
             child: const Icon(
               Icons.add_circle_outline,
