@@ -10,6 +10,9 @@ abstract class _CarrinhoStore with Store {
   @observable
   List<Item> listaCarrinho = ObservableList<Item>();
 
+  @observable
+  double precoTotal = 0;
+
   @computed
   int get quantidadeCarrinho => listaCarrinho.length;
 
@@ -19,10 +22,12 @@ abstract class _CarrinhoStore with Store {
   @action
   void adicionarItem(Item item) {
     listaCarrinho.add(item);
+    precoTotal += item.preco;
   }
 
   @action
   void removerItem(Item item){
     listaCarrinho.remove(item);
+    precoTotal -= item.preco;
   }
 }
